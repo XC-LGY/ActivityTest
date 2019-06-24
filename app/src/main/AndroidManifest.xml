@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.administrator.activitytest">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".FirstActivity"
+            android:label="This is FirstActivity">
+
+            <!-- 默认启动类当程序启动时系统自动调用的配制 -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SecondActivity"
+            android:label="This is SecondActivity">
+
+            <!-- 添加intent-filter,Intent意图可以通过隐匿模式找到此活动 -->
+            <intent-filter>
+                <action android:name="com.example.activitytest.ACTION_START" />
+                <!-- 使用android.intent.category.DEFAULT会自动匹配，使用Intent不用指定category -->
+                <category android:name="android.intent.category.DEFAULT" />
+                <!-- 特定的category，使用Intent指定的category -->
+                <category android:name="com.example.activitytest.MY_CATEGORY" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ThirdActivity"
+            android:label="This is ThirdActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <!--
+                    1、通过这种方式打开外部的活动，如下：
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setData(Uri.parse("https://www.baidu.com"));
+                            startActivity(intent);
+                    2、如果配制了下面这一项，会选择默认的浏览器打开此页面【和没有配制此activity是一样的】。
+                    3、如果没有配制下面这一项，访问上面的(https://www.baidu.com)页面时会提示：
+                        1）手机自带的浏览器打开(https://www.baidu.com)
+                        2）打开此活动页面(ThirdActivity)
+                -->
+                <!-- <category android:name="android.intent.category.BROWSABLE"/> -->
+                <!-- 如果访问的数据以(https)开头就会被过滤。如上面的访问方式访问(https://www.baidu.com) -->
+                <data android:scheme="https" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".FourthActivity" android:label="@string/title_activity_fourth"/>
+    </application>
+
+</manifest><!--
+    所有的活动(Activity)都需要在此文件中注册才能生效：
+    1、在application中注册活动，
+        一、属性：
+        1）中期的android:name属性指向活动（Activity）
+        2）其中的android:label属性，用来指定活动的标题名称
+        二、子项：
+        1）其中的子项（intent-filter）指定活动级别【默认启动类当程序启动时系统自动调用它】
+--><!--
+    手动创建一个app项目的全过程：
+    1、创建时不同时创建Activity【即选择Add No Activity】
+    2、项目创建之后，首先在包的根目录下创建一个Activity
+        1）不要选择Generate Layout File（此项会自动关联并创建一个布局）
+        2）不要选择Launcher Activity (此项会把此Activity设置为当前项目的主活动-》活动入口)
+    3、接下来创建一个布局，布局中创建可视元素(按钮、文本框等)
+    4、上面的活动中加入创建的布局【setContentView(R.layout.first_layout);】
+    5、在AndroidManifest.xml中注册上面创建的活动【详情如上所述】
+-->
